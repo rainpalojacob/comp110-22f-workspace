@@ -1,60 +1,42 @@
-"""Exercise 2 One shot wordle"""
+"""Exercise 2 One shot wordle."""
 
-__author__ = 730569341
-
+__author__ = "730569341"
 
 secret: str = "python"
-guess: str = input("What is your 6-letter guess? ")
-# looping index
+WHITE_BOX: str = "\U00002B1C"
+GREEN_BOX: str = "\U0001F7E9"
+YELLOW_BOX: str = "\U0001F7E8"
+
+# looping index and boxes string
 i: int = 0 
-s: str = ""
+box: str = ""
 
-# whether the guessed character exists 
-exists: bool = False
-# alternate indicies 
-alt: int = 0
+# input from user
+guess: str = input("What is your 6-letter guess? ")
+while len(str(guess)) != 6:
+    secret = input("That was not 6 letters! Try again: ")
+while len(str(guess)) == 6:
+    print("Not quite. Play again soon! ")
 
-# checking indices for correct matches 
-while i < len(secret): 
+# checking for incorrect matches
+while i < len(secret):
+   # whether the guessed character exists 
+    exists: bool = False 
+    # alternate indicies 
+    s: int = 0 
+    while s < len(secret):
+        if guess[i] == secret[s]:
+            exists = True
+        s += 1    
+            
+    # checking indices for correct matches
     if guess[i] == secret[i]:
-        s+= "\U0001F7E9"
-    else: 
-        if alt == guess[i]: 
-            exists = True 
-            s+= "\U0001F7E8"
-        else: 
-            alt += 1 
-        s+= "\U00002B1C"
-    i+= 1 
-print(s)
-
-# prompting a guess
-while len(guess) != len(secret): 
-    guess: input("That was not 6 letters! Try again: ")  
-else: 
-    if guess != secret: 
-        print("Not quite. Play again soon! ")
-        exit
-    if guess == secret:
-        print("Woo! You got it! ")
-
-
-        
-
-
-
-
-
-
-
-   
-   
-  
-  
-  
-
-
-
-
-
-
+        box += GREEN_BOX
+    elif exists:
+        box += YELLOW_BOX
+    else:
+        box += WHITE_BOX
+    i += 1 
+print(box)
+if box == GREEN_BOX * len(secret):
+    print("Woo! You got it! ")
