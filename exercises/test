@@ -1,0 +1,43 @@
+ys: list[int] = [110, 120]
+for y in ys:
+  print(y)
+
+
+
+   for element in list_one:
+        if element not in list_two:
+            result.append(element)
+
+    for element in list_two:
+        if element not in list_one:
+            result.apend(element)
+    
+    # concatenating based on list comprehension
+    result = [element for list in [list_one, list_two] for element in list]
+
+    return result
+
+
+    def concat(list_one: list[int], list_two: list[int]) -> int:
+    """Given two lists of integers, display list with all elements."""
+    # empty list to store the elements from both lists
+    result = []
+    # appending elements of list_two at the end of list_one
+    if len(list_one) > len(list_two):
+        last_num = list_one[len(list_one)]
+        for element in (0, len(list_two)):
+            result.append(list_one[element])
+            result.append(list_two[element])
+        return result
+    
+    elif len(list_two) > len(list_one):
+        last_num = list_two[len(list_two)]
+        for element in (0, lent(list_one)):
+            result.append(list_one[element])
+            result.append(list_two[element])
+        return result   
+    
+    elif len(list_one) and len(list_two) == 0:
+        return result 
+
+        [element for list in [list_one, list_two] for element in list]
