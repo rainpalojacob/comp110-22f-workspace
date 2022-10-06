@@ -41,3 +41,10 @@ for y in ys:
         return result 
 
         [element for list in [list_one, list_two] for element in list]
+
+
+# one edge case
+    assert only_evens(a_list, 0) == None
+    # two use cases
+    a_list = [1, 2, 3, 4, 5, 6, 7]
+    assert only_evens(a_list) == [2, 4, 6]

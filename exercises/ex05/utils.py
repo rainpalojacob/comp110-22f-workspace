@@ -13,7 +13,7 @@ def only_evens(list: list[int]) -> list[int]:
         if number % 2 == 0:
             even_numbers.append(number)
     return even_numbers 
-  
+
 
 def concat(list_one: list[int], list_two: list[int]) -> list[int]:
     """Given two lists of integers, display list with all elements."""
@@ -24,8 +24,8 @@ def concat(list_one: list[int], list_two: list[int]) -> list[int]:
         result.append(element)
 
     for element in list_two:
-        result.apend(element)
-     # concatenating based on list comprehension
+        result.append(element)
+    # concatenating based on list comprehension
     result = list_one + list_two
     return result
    
@@ -33,21 +33,18 @@ def concat(list_one: list[int], list_two: list[int]) -> list[int]:
 def sub(a_list: list[int], start: int, end: int) -> list[int]:
     """Given a list of integers, display the subset of the given list."""
     subset: list[int] = []
-
     if start < 0:
         start = 0 
-    
-    if end > len(a_list): 
+    elif end > len(a_list):
         end = len(a_list)
+    elif len(a_list) == 0:
+        return a_list
 
     i: int = 0
-    while start < end:
-        if len(a_list) == 0:
-            return subset
-        if start > len(a_list):
-            return subset
-        if end <= 0 :
-            return subset 
-    else: 
-        return subset 
-     
+    while i < len(a_list):
+        if i >= start and i <= end - 1:
+            subset.append(a_list[i])
+        i += 1 
+    return subset
+        
+    
