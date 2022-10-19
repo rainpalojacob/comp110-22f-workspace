@@ -1,50 +1,69 @@
-ys: list[int] = [110, 120]
-for y in ys:
-  print(y)
+"""Quiz 2 practice."""
 
 
+def odd_and_even(list_1: list[int]) -> list[int]:
+    """"""
+    i: int = 0
+    list_2: list[int]: []
 
-   for element in list_one:
-        if element not in list_two:
-            result.append(element)
+    while i < len(list_1):
+        if list_1[i] % 2 == 1 and i % 2 == 0:
+            list_2.apend(list_1[i])
+        i += 1 
+    return list_2
 
-    for element in list_two:
-        if element not in list_one:
-            result.apend(element)
-    
-    # concatenating based on list comprehension
-    result = [element for list in [list_one, list_two] for element in list]
+
+def vowels_and_threes(string: str) -> str:
+    """"""
+    vowels: list[str] = ["a", "e", "i", "o", "u"]
+    new_string: str = ""
+    is_vowel: bool = False
+    i: int = 0
+    j: int = 0
+
+    while i < len(string):
+        is_vowel = False
+        j = 0 
+        while j < len(vowels):
+            if vowels[j] == string [i]:            
+                is_vowel = True
+            j += 1 
+        if i % 3 == 0 and is_vowel:
+            # do nothing 
+            new_string += ""
+        elif i % 3 == 0:
+            new_string += string[i]
+        elif is_vowel:
+            new_string += string[i]
+        i += 1
+    return new_string
+
+
+def average_grades(grades: dict[str, list[int]]) -> dict[str, float]:
+    """"""
+    averages: dict[str, float] = 0 
+    for student in grades:
+        total: int = 0
+        for grade in grades[student]:
+            total += grade
+        averages[student] = total / len(grades[student])
+    return averages
+
+# use in exercise 8
+def best_animals(visits: dict[str, list[int]]) -> list[str]:
+    """""""
+    result: list[str] = []
+    i: int = 0
+
+    while i < 3:
+        max: int = 0 
+        animal: str = ""
+        for exhibit in visits:
+            if visits[exhibit[i]] > max:
+                max = visits[exhibit[i]]
+                animal = exhibit
+        result.append(animal)
+
+        i += 1 
 
     return result
-
-
-    def concat(list_one: list[int], list_two: list[int]) -> int:
-    """Given two lists of integers, display list with all elements."""
-    # empty list to store the elements from both lists
-    result = []
-    # appending elements of list_two at the end of list_one
-    if len(list_one) > len(list_two):
-        last_num = list_one[len(list_one)]
-        for element in (0, len(list_two)):
-            result.append(list_one[element])
-            result.append(list_two[element])
-        return result
-    
-    elif len(list_two) > len(list_one):
-        last_num = list_two[len(list_two)]
-        for element in (0, lent(list_one)):
-            result.append(list_one[element])
-            result.append(list_two[element])
-        return result   
-    
-    elif len(list_one) and len(list_two) == 0:
-        return result 
-
-        [element for list in [list_one, list_two] for element in list]
-
-
-# one edge case
-    assert only_evens(a_list, 0) == None
-    # two use cases
-    a_list = [1, 2, 3, 4, 5, 6, 7]
-    assert only_evens(a_list) == [2, 4, 6]
