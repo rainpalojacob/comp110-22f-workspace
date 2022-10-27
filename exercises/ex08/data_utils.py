@@ -4,67 +4,83 @@ __author__ = "730569341"
 
 # Define your functions below
 
-"""0.0 Read an entire CSV into a list of rows."""
-from data_utils import read_csv_rows
-data_rows: list[dict[str, str]] = read_csv_rows(DATA_FILE_PATH)
+# Part 0
+from csv import DictReader
+def read_csv_rows(filename: str) -> list[dict[str, str]]:
+    """Read the rows of a CSV into a 'table'."""
+    result: list[dict[str, str]] = []
+    
+    file_handle = open(filename, "r", encoding="utf8")
+    csv_reader = DictReader(file_handle)
 
-if len(data_rows) == 0:
-    print("Go implement read_csv_rows in data_utils.py")
-    print("Be sure to save your work before re-evaluating this cell!")
-else:
-    print(f"Data File Read: {DATA_FILE_PATH}")
-    print(f"{len(data_rows)} rows")
-    print(f"{len(data_rows[0].keys())} columns")
-    print(f"Columns names: {data_rows[0].keys()}")
-
-"""0.1 Produce a list of values into a single column."""
-
-from data_utils import column_values
-
-subject_age: list[str] = column_values(data_rows, "subject_age")
-
-if len(subject_age) == 0:
-    print("Complete your implementation of column_values in data_utils.py")
-    print("Be sure to follow the guidelines above and save your work before re-evaluating!")
-else:
-    print(f"Column 'subject_age' has {len(subject_age)} values.")
-    print("The first five values are:")
-    for i in range(5):
-        print(subject_age[i])
-
-"""0.2 Transform a table from a list of rows to a dictionary of column."""
-from data_utils import columnar
-
-data_cols: dict[str, list[str]] = columnar(data_rows)
-
-if len(data_cols.keys()) == 0:
-    print("Complete your implementation of columnar in data_utils.py")
-    print("Be sure to follow the guidelines above and save your work before re-evaluating!")
-else:
-    print(f"{len(data_cols.keys())} columns")
-    print(f"{len(data_cols['subject_age'])} rows")
-    print(f"Columns names: {data_cols.keys()}")
-
-"""Part 1 Narrowing down a data table."""
-from tabulate import tabulate 
-
-"""1.0 Produce a new column table with only first number of rows of data for each column."""
-
-"""1.2 Produce a new column-based table with two column-based tables combined."""
-
-"""2.0 Produce a dictionary of a key and value of the number of times values appeared."""
+    for row in csv_reader:
+        result.append(row)
+    file_handle.close()
+    return result
 
 
-"""Charting with matplotlib."""
-from matplotlib import pyplot as plt
+def column_values(data_rows: list[dict[str, str]], column: str) -> list[str]: 
+    """Produce a list of string of column values."""
+    result: list[str] = []
+    for i in range(len(data_rows)): 
+        if column[i]:
+            result.append(data_rows[i])
+    return result
+ 
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
-fig.suptitle("Traffic Stops in Durham - March 21st through 27th - 2015")
+def columnar(data_rows: list[dict[str, str]]) -> dict[str, list[str]]: 
+    """Transform a table as a list of rows into a dictionary of columns."""
+    result: dict[str, list[str]] = []
+
+    first_row: dict[str, str] = data_rows[0]
+    for column in data_rows:
+        result[column] = column_values(data_rows, column)
+    return result
 
 
-axes[0].set_title("By Race")
-axes[0].bar(race_counts.keys(), race_counts.values())
-axes[0].tick_params(axis='x', labelrotation = 45)
+# Part 1 
+def head(table: dict[str, list[str]], rows: int) -> dict[str, list[str]]:
+    """Produce a new column table with only the rows of data for each column."""
+    result: dict[str, list[str]] = []
+    if rows >= len(table):
+        rows = len(table)
+    for column in table:
+        a_list: list[str] = []
+        for i in range(rows):
+            a_list.append(table[column][i])
+        result[column] = a_list
+    return result
 
-axes[1].set_title("By Sex")
-axes[1].bar(sex_counts.keys(), sex_counts.values())
+
+def select(data_cols: dict[str, list[str]], columns: list[str]) -> dict[str, list[str]]: 
+    """Produce a new column table with a subset of original."""
+    result: dict[str, list[str]] = []
+    for columns in data_cols:
+        result[columns] = data_cols.values()  
+    return result
+
+
+def concat(data_cols_head: dict[str,list[str]], additional_table: dict[str,list[str]]) -> dict[str,list[str]]:
+    """Produce a new column table with two column tables combined."""
+    result: dict[str,list[str]] = []
+    for key in data_cols_head:
+        result[key] = data_cols_head[key]
+    for key in additional_table:
+        if key in result:
+            result[key] += data_cols_head[key]
+        else:
+            result[key] += data_cols_head[key]
+    return result
+
+
+# Part 2 
+def count(a_list: list[str] -> dict[str, int]):
+    """Count the number of times a value appears in an input list."""
+    result: dict[str, int] = []
+
+    for item in range(len(a_list)):
+        if a_list[item] not in result:
+            result[a_list[item]] = 1 
+        else:
+            result[a_list[item]] += 1 
+    return result
