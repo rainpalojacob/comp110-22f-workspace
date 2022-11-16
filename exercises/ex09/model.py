@@ -29,7 +29,7 @@ class Point:
         return Point(x, y)
     
 
-    def distance(self, other: Point) -> Point: 
+    def distance(self, other: Point) -> Point:
         """Return the distance between two Point objects."""
         distance: float = sqrt(((self.x - other.x) ** 2) + ((self.y - other.y) ** 2))
         return distance
@@ -47,29 +47,29 @@ class Cell:
         self.location = location
         self.direction = direction
 
-    # Part 1) Define a method named `tick` with no parameters.
-    # Its purpose is to reassign the object's location attribute
-    # the result of adding the self object's location with its
-    # direction. Hint: Look at the add method.
+    
+   
     def tick(self) -> None:
+        """Count the number of times the cell has been infected."""
         self.location = self.location.add(self.direction)
         if self.sickness == constants.INFECTED: 
-            self.sickness +=1 
-        if self.sickness > constants.RECOVERY_PERIOD:
-            self.sickness = Cell.is_immune
+            self.sickness += 1 
+        elif self.sickness > constants.RECOVERY_PERIOD:
+            self.sickness = Cell.is_immunize
 
 
     def color(self) -> str:
         """Return the color representation of a cell."""
         if self.sickness == Cell.is_vulnerable: 
-            return "gray"
+            return Cell.color("gray")
         if self.sickness == Cell.is_infected:
-            return "red"
+            return Cell.color("red")
         if self.sickness == Cell.is_immune:
-            return "green"
+            return Cell.color("green")
 
 
     def contract_disease(self) -> None:
+        """Indicate if the cell is infected."""
         self.sickness = constants.INFECTED 
     
 
@@ -89,17 +89,23 @@ class Cell:
             return False
 
 
-    def contact_with(self, cell: Cell, other_cell: Cell) -> None:
+    def contact_with(self, cell, another_cell) -> None:
         """When two Cell objects do not make contact."""
-        if cell or other_cell == Cell.is_infected:
-            other_cell == constants.INFECTED
+        self.cell = cell
+        self.another_cell = another_cell 
+        for Cell in Cell.population:
+            if cell == Cell.is_infected and another_cell == Cell.is_vulnerable:
+                another_cell == Cell.is_infected
+        
     
 
     def immunize(self) -> None:
+        """Indicate if the cell is immune."""
         self.sickness = constants.IMMUNE 
     
 
     def is_immune(self) -> bool:
+        """Method to indciate if the cell is immune."""
         if self.sickness == constants.IMMUNE:
             return True
         else:
@@ -124,7 +130,7 @@ class Model:
             cell: Cell = Cell(start_location, start_direction)
             self.population.append(cell)
         
-        if Model.num_infected_cells >= cells: 
+        if Model.num_infected_cells <= 0 or Model.num_infected_cells>= cells: 
             return ValueError('Some cells must begin infected.')
     
 
@@ -158,21 +164,17 @@ class Model:
             cell.direction.x *= -1.0
 
 
-##########
-    # def is_complete(self) -> bool:
-    #     """Method to indicate when the simulation is complete."""
-    #     #if all Cell objects in the population are either vulnerable or immune
-    #         return True 
-    #     #else when any of the Cell objects are infected
-    #         return False
-    
-############
+    def is_complete(self) -> bool:
+        """Method to indicate when the simulation is complete."""
+        for Cell in Cell.population:
+            if Cell.sickness == Cell.is_vulnerable or Cell.is_immune:
+                return True     
+            if Cell.sickness == Cell.is_infected: 
+                return False
+ 
+
     def check_contacts(self) -> None:
         """Method to indicate when any two cell values come in contact with one another."""
     # compare the distance between every two cell object location attributes in the population
-    #if any distance between two cells is less than constant CELL_RADIUS
+    # if any distance between two cells is less than constant CELL_RADIUS
         # call the cell.contact_with on 1 of the 2 cell objects, refer to other as an argument 
-
-
-
-    
